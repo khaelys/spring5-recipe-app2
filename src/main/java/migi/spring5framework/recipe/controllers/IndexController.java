@@ -1,14 +1,27 @@
 package migi.spring5framework.recipe.controllers;
 
+import migi.spring5framework.recipe.services.RecipeService;
+import migi.spring5framework.recipe.services.RecipeServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class IndexController {
 
+    private final RecipeService recipeService;
+
+    @Autowired
+    public IndexController(RecipeService recipeService) {
+        this.recipeService = recipeService;
+    }
+
     @RequestMapping({"", "/", "/index"})
-    public String getIndexPage(){
-        System.out.println("Some message...123");
+    public String getIndexPage(Model model){
+
+        model.addAttribute("recipes", recipeService.getRecipes());
+
         return "index";
     }
 }
