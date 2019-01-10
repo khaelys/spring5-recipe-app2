@@ -1,5 +1,6 @@
 package migi.spring5framework.recipe.bootstrap;
 
+import lombok.extern.slf4j.Slf4j;
 import migi.spring5framework.recipe.domain.*;
 import migi.spring5framework.recipe.repositories.CategoryRepository;
 import migi.spring5framework.recipe.repositories.RecipeRepository;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Component
 public class RecipeBootstrap implements CommandLineRunner {
 
@@ -29,6 +31,7 @@ public class RecipeBootstrap implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.debug("Recipe data loader...");
 
         recipeRepository.saveAll(getRecipes());
         // getRecipes().forEach(recipeRepository::save);
