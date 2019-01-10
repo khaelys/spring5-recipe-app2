@@ -6,6 +6,7 @@ import javax.persistence.*;
 import java.util.Set;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipes"}) // TODO - Solve problem with the recipe bidirectional relationship
 @Entity
 public class Category {
 

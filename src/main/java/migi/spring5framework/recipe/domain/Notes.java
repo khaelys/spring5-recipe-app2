@@ -1,10 +1,11 @@
 package migi.spring5framework.recipe.domain;
 
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 
 @Data
+@EqualsAndHashCode(exclude = {"recipe"})
 @Entity
 public class Notes {
 
@@ -17,4 +18,5 @@ public class Notes {
 
     @Lob // This string can be very long. CLOB or BLOB
     private String recipeNotes;
+
 }

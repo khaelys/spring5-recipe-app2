@@ -7,8 +7,12 @@ import migi.spring5framework.recipe.repositories.RecipeRepository;
 import migi.spring5framework.recipe.repositories.UnitOfMeasureRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.ApplicationListener;
+import org.springframework.context.event.ApplicationContextEvent;
+import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
+import javax.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 @Component
-public class RecipeBootstrap implements CommandLineRunner {
+public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final UnitOfMeasureRepository unitOfMeasureRepository;
     private final CategoryRepository categoryRepository;
@@ -30,7 +34,8 @@ public class RecipeBootstrap implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    @Transactional // TODO - solve problem with lazy initialization (This problem is random)
+    public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
         log.debug("Recipe data loader...");
 
         recipeRepository.saveAll(getRecipes());
